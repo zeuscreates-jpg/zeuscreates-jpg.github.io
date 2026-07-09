@@ -2,58 +2,201 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@zeuscreates.exe</title>
     <style>
-        body { background-color: black; color: #008080; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
-        
-        /* Welcome Section */
-        #welcome-section { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        h1 { font-size: 3rem; text-shadow: 0 0 15px #008080; }
-        .neon-button { padding: 15px 30px; font-size: 1.5rem; color: black; background-color: #008080; border: none; cursor: pointer; box-shadow: 0 0 20px #008080; font-weight: bold; margin-top: 20px; transition: 0.3s; }
-        .neon-button:hover { background-color: #00ffff; box-shadow: 0 0 40px #00ffff; }
+        :root {
+            --neon-cyan: #00f2ff;
+            --bg-dark: #050505;
+            --card-bg: #121218;
+        }
 
-        /* Products Section */
-        #products-section { display: none; padding: 50px; }
-        .product-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px; }
-        .product-card { border: 2px solid #008080; padding: 20px; width: 280px; background: #0a0a0a; text-decoration: none; color: #008080; display: block; }
-        img { width: 100%; height: 200px; object-fit: cover; border: 1px solid #008080; margin-bottom: 15px; }
+        body { 
+            background: var(--bg-dark); 
+            color: white; 
+            font-family: 'Courier New', monospace; 
+            margin: 0; 
+        }
+        
+        /* Header & Nav */
+        header { 
+            display: flex; 
+            align-items: center; 
+            padding: 20px; 
+            border-bottom: 1px solid var(--neon-cyan); 
+        }
+        .menu-btn { 
+            cursor: pointer; 
+            font-size: 24px; 
+            margin-right: 20px; 
+            color: var(--neon-cyan); 
+        }
+        
+        /* Sidebar */
+        .sidebar { 
+            height: 100%; 
+            width: 0; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            background: #000; 
+            overflow-x: hidden; 
+            transition: 0.5s; 
+            padding-top: 60px; 
+            border-right: 1px solid var(--neon-cyan); 
+            z-index: 1000; 
+        }
+        .sidebar a { 
+            padding: 15px; 
+            display: block; 
+            color: white; 
+            text-decoration: none; 
+        }
+        .sidebar a:hover { 
+            color: var(--neon-cyan); 
+        }
+
+        /* Product Section */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+            padding: 20px; 
+        }
+        .product-card { 
+            background: var(--card-bg); 
+            padding: 20px; 
+            border: 1px solid #333; 
+            transition: 0.3s; 
+            text-align: center; 
+            border-radius: 8px; 
+        }
+        .product-card:hover { 
+            border-color: var(--neon-cyan); 
+            box-shadow: 0 0 15px var(--neon-cyan); 
+            transform: scale(1.05); 
+        }
+        
+        /* Button Styles */
+        .product-card button, .modal button { 
+            background: transparent; 
+            color: var(--neon-cyan); 
+            border: 1px solid var(--neon-cyan); 
+            padding: 8px 16px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-family: 'Courier New', monospace; 
+            font-size: 16px; 
+            transition: 0.3s; 
+            margin-top: 10px;
+        }
+        .product-card button:hover, .modal button:hover { 
+            background: var(--neon-cyan); 
+            color: #000; 
+            box-shadow: 0 0 15px var(--neon-cyan); 
+        }
+
+        /* View Overlay (Modal) */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.9); 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 2000; 
+            flex-direction: column; 
+        }
+        .modal img { 
+            max-width: 80%; 
+            max-height: 70vh; 
+            border: 2px solid var(--neon-cyan); 
+            margin-bottom: 20px; 
+            border-radius: 8px; 
+        }
+        .modal button {
+            padding: 10px 30px;
+            font-size: 18px;
+        }
+        .close-modal { 
+            position: absolute; 
+            top: 20px; 
+            right: 30px; 
+            color: white; 
+            font-size: 30px; 
+            cursor: pointer; 
+        }
     </style>
 </head>
 <body>
 
-    <div id="welcome-section">
-        <h1>Welcome to Zeuscreates Page</h1>
-        <button class="neon-button" onclick="showProducts()">GET STARTED</button>
+    <header>
+        <div class="menu-btn" onclick="toggleNav()">☰</div>
+        <h1>@zeuscreates.exe</h1>
+    </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" onclick="toggleNav()">× Close</a>
+        <a href="https://www.desktophut.com/">Wallpapers</a>
+        <a href="https://www.instagram.com/zeuscreates.exe?igsh=MWRndzF3ZXItcHBlbw==">Setup Upgrades</a>
     </div>
 
-    <div id="products-section">
-        <h1>My Accessories</h1>
-        <div class="product-container">
-            
-            <!-- Product 1 -->
-            <a href="https://amzn.in/d/0glh4cvU" class="product-card" target="_blank">
-                <img src="actionfigure.jpg" alt="Anime Figure">
-                <h3>Anime Figure</h3>
-            </a>
+        
+        <div class="product-card">
+            <h3>Keyboard</h3>
+            <button onclick="showProduct('keyboard.jpg', 'https://amzn.in/d/0fL0Hr63')">View</button>
+        </div>
 
-            <!-- Product 2 -->
-            <a href="https://amzn.in/d/0b3TUgpI" class="product-card" target="_blank">
-                <img src="keyboard.jpg" alt="Custom Keyboard">
-                <h3>Custom Keyboard</h3>
-            </a>
+        <div class="product-card">
+            <h3>Anime Figure</h3>
+            <button onclick="showProduct('actionfigure.jpg', 'https://amzn.in/d/0gbRo820')">View</button>
+        </div>
 
-            <!-- Product 3 -->
-            <a href="https://amzn.in/d/0grvzUPx" class="product-card" target="_blank">
-                <img src="deskmat.jpg" alt="Desk Mat">
-                <h3>Desk Mat</h3>
-            </a>
+        <div class="product-card">
+            <h3>Deskmat</h3>
+            <button onclick="showProduct('deskmat.jpg', 'https://amzn.in/d/02BmEknk')">View</button>
+        </div>
 
+        <div class="product-card">
+            <h3>Headphone</h3>
+            <button onclick="showProduct('headphone.jpg', 'https://amzn.in/d/08CAFopT')">View</button>
+        </div>
+
+        <div class="product-card">
+            <h3>Cooling Pad</h3>
+            <button onclick="showProduct('coolingpad.jpg', 'https://amzn.in/d/0gxBpZbN')">View</button>
         </div>
     </div>
 
+    <div id="modal" class="modal">
+        <span class="close-modal" onclick="closeProduct()">×</span>
+        <img id="modal-img" src="" alt="Product">
+        <a id="visit-btn" href="#" target="_blank"><button>VISIT</button></a>
+    </div>
+
     <script>
-        function showProducts() {
-            document.getElementById('welcome-section').style.display = 'none';
-            document.getElementById('products-section').style.display = 'block';
+        // Sidebar logic
+        function toggleNav() {
+            var sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+
+        // Modal logic
+        function showProduct(imgSrc, link) {
+            document.getElementById("modal").style.display = "flex";
+            document.getElementById("modal-img").src = imgSrc;
+            document.getElementById("visit-btn").href = link;
+        }
+
+        function closeProduct() {
+            document.getElementById("modal").style.display = "none";
         }
     </script>
 </body>
