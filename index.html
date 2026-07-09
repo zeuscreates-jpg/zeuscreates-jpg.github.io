@@ -6,197 +6,297 @@
     <title>@zeuscreates.exe</title>
     <style>
         :root {
-            --neon-cyan: #00f2ff;
-            --bg-dark: #050505;
-            --card-bg: #121218;
+            --neon-purple: #c774ff;
+            --deep-purple: #7a22cc;
+            --bg-dark: #0a0510;
+            --card-bg: rgba(30, 15, 45, 0.4);
+            --text-glow: 0 0 10px var(--neon-purple);
         }
 
         body { 
-            background: var(--bg-dark); 
+            background-color: var(--bg-dark); 
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(122, 34, 204, 0.15) 0%, transparent 60%),
+                linear-gradient(0deg, rgba(10,5,16,1) 0%, rgba(20,10,35,0.8) 100%);
             color: white; 
-            font-family: 'Courier New', monospace; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             margin: 0; 
+            min-height: 100vh;
+            overflow-x: hidden;
         }
         
         /* Header & Nav */
         header { 
             display: flex; 
+            justify-content: space-between; 
             align-items: center; 
-            padding: 20px; 
-            border-bottom: 1px solid var(--neon-cyan); 
-        }
-        .menu-btn { 
-            cursor: pointer; 
-            font-size: 24px; 
-            margin-right: 20px; 
-            color: var(--neon-cyan); 
+            padding: 20px 40px; 
+            position: relative;
+            z-index: 10;
         }
         
-        /* Sidebar */
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: rgba(30, 15, 45, 0.6);
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 15px rgba(199, 116, 255, 0.4);
+            text-shadow: var(--text-glow);
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-btn { 
+            cursor: pointer; 
+            font-size: 30px; 
+            color: var(--neon-purple); 
+            transition: 0.3s;
+            margin-left: auto;
+            text-shadow: var(--text-glow);
+            z-index: 1001; /* Keeps menu button above sidebar */
+        }
+        .menu-btn:hover {
+            text-shadow: 0 0 20px var(--neon-purple);
+            transform: scale(1.1);
+        }
+        
+        /* Glassmorphism Right Sidebar */
         .sidebar { 
             height: 100%; 
             width: 0; 
             position: fixed; 
             top: 0; 
-            left: 0; 
-            background: #000; 
+            right: 0; /* Moved to the right */
+            background: rgba(25, 10, 40, 0.3); 
+            backdrop-filter: blur(15px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(15px);
             overflow-x: hidden; 
-            transition: 0.5s; 
-            padding-top: 60px; 
-            border-right: 1px solid var(--neon-cyan); 
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            padding-top: 100px; 
+            border-left: 1px solid rgba(199, 116, 255, 0.3); 
             z-index: 1000; 
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
         }
         .sidebar a { 
-            padding: 15px; 
+            padding: 20px 40px; 
             display: block; 
-            color: white; 
+            color: #e2cbf5; 
             text-decoration: none; 
+            font-size: 18px;
+            letter-spacing: 1px;
+            transition: 0.3s;
         }
         .sidebar a:hover { 
-            color: var(--neon-cyan); 
+            color: #fff; 
+            text-shadow: var(--text-glow);
+            background: rgba(199, 116, 255, 0.1);
         }
 
-        /* Product Section */
+        /* Product Grid */
         .grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 20px; 
-            padding: 20px; 
-        }
-        .product-card { 
-            background: var(--card-bg); 
-            padding: 20px; 
-            border: 1px solid #333; 
-            transition: 0.3s; 
-            text-align: center; 
-            border-radius: 8px; 
-        }
-        .product-card:hover { 
-            border-color: var(--neon-cyan); 
-            box-shadow: 0 0 15px var(--neon-cyan); 
-            transform: scale(1.05); 
-        }
-        
-        /* Button Styles */
-        .product-card button, .modal button { 
-            background: transparent; 
-            color: var(--neon-cyan); 
-            border: 1px solid var(--neon-cyan); 
-            padding: 8px 16px; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-family: 'Courier New', monospace; 
-            font-size: 16px; 
-            transition: 0.3s; 
-            margin-top: 10px;
-        }
-        .product-card button:hover, .modal button:hover { 
-            background: var(--neon-cyan); 
-            color: #000; 
-            box-shadow: 0 0 15px var(--neon-cyan); 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            padding: 40px; 
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
         }
 
-        /* View Overlay (Modal) */
-        .modal { 
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.9); 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 2000; 
-            flex-direction: column; 
+        /* Smooth Card Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .modal img { 
-            max-width: 80%; 
-            max-height: 70vh; 
-            border: 2px solid var(--neon-cyan); 
-            margin-bottom: 20px; 
-            border-radius: 8px; 
+
+        .product-card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border: 1px solid rgba(199, 116, 255, 0.2); 
+            border-radius: 16px; 
+            text-align: left; 
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            animation: fadeInUp 0.8s ease backwards;
         }
-        .modal button {
-            padding: 10px 30px;
-            font-size: 18px;
+        
+        /* Staggered load in for cards */
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .product-card h3 {
+            margin: 0 0 15px 0;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 1px;
         }
-        .close-modal { 
-            position: absolute; 
-            top: 20px; 
-            right: 30px; 
-            color: white; 
-            font-size: 30px; 
-            cursor: pointer; 
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            transition: 0.5s;
+            filter: brightness(0.9);
         }
+        
+        .product-card:hover { 
+            border-color: var(--neon-purple); 
+            box-shadow: 0 0 30px rgba(122, 34, 204, 0.4), inset 0 0 15px rgba(122, 34, 204, 0.2); 
+            transform: translateY(-10px); 
+        }
+        .product-card:hover img {
+            filter: brightness(1.1);
+            transform: scale(1.03);
+        }
+
+        /* Pill shaped VISIT Button */
+        .visit-btn { 
+            align-self: center;
+            background: transparent; 
+            color: #fff; 
+            border: 2px solid var(--neon-purple); 
+            padding: 10px 40px; 
+            border-radius: 30px; 
+            text-decoration: none;
+            font-family: 'Segoe UI', sans-serif; 
+            font-size: 14px; 
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: 0.3s; 
+            position: relative;
+            box-shadow: 0 0 10px rgba(199, 116, 255, 0.2);
+        }
+        .visit-btn::before { /* Small dots on the sides of the button */
+            content: '';
+            position: absolute;
+            left: 15px; top: 50%; transform: translateY(-50%);
+            width: 4px; height: 4px; background: var(--neon-purple); border-radius: 50%;
+            box-shadow: 0 0 5px var(--neon-purple);
+        }
+        .visit-btn::after {
+            content: '';
+            position: absolute;
+            right: 15px; top: 50%; transform: translateY(-50%);
+            width: 4px; height: 4px; background: var(--neon-purple); border-radius: 50%;
+            box-shadow: 0 0 5px var(--neon-purple);
+        }
+        .visit-btn:hover { 
+            background: var(--neon-purple); 
+            color: #000; 
+            box-shadow: 0 0 20px var(--neon-purple); 
+        }
+        .visit-btn:hover::before, .visit-btn:hover::after {
+            background: #000;
+        }
+
+        /* Background Cyberpunk Decor (Crosshair) */
+        .crosshair {
+            position: fixed;
+            bottom: 15%;
+            left: 35%;
+            width: 40px;
+            height: 40px;
+            border: 1.5px solid var(--neon-purple);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+            animation: pulse 4s infinite;
+        }
+        .crosshair::before, .crosshair::after {
+            content: '';
+            position: absolute;
+            background: var(--neon-purple);
+        }
+        .crosshair::before { top: 50%; left: -8px; right: -8px; height: 1.5px; transform: translateY(-50%); }
+        .crosshair::after { left: 50%; top: -8px; bottom: -8px; width: 1.5px; transform: translateX(-50%); }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.2; box-shadow: 0 0 5px var(--neon-purple); }
+            50% { transform: scale(1.1); opacity: 0.5; box-shadow: 0 0 20px var(--neon-purple); }
+            100% { transform: scale(1); opacity: 0.2; box-shadow: 0 0 5px var(--neon-purple); }
+        }
+
     </style>
 </head>
 <body>
 
+    <div class="crosshair"></div>
+
     <header>
-        <div class="menu-btn" onclick="toggleNav()">☰</div>
-        <h1>@zeuscreates.exe</h1>
+        <div class="logo">@zeuscreates.exe</div>
+        <div id="menuIcon" class="menu-btn" onclick="toggleNav()">☰</div>
     </header>
 
     <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" onclick="toggleNav()">× Close</a>
-        <a href="https://www.desktophut.com/">Wallpapers</a>
-        <a href="https://www.instagram.com/zeuscreates.exe?igsh=MWRndzF3ZXItcHBlbw==">Setup Upgrades</a>
+        <a href="https://www.desktophut.com/" target="_blank">Wallpapers</a>
+        <a href="https://www.instagram.com/zeuscreates.exe?igsh=MWRndzF3ZXItcHBlbw==" target="_blank">Setup Upgrades</a>
     </div>
 
+    <div class="grid"> 
         
         <div class="product-card">
             <h3>Keyboard</h3>
-            <button onclick="showProduct('keyboard.jpg', 'https://amzn.in/d/0fL0Hr63')">View</button>
+            <img src="keyboard.png" alt="Keyboard">
+            <a href="https://amzn.in/d/0fL0Hr63" class="visit-btn" target="_blank">VISIT</a>
         </div>
 
         <div class="product-card">
             <h3>Anime Figure</h3>
-            <button onclick="showProduct('actionfigure.jpg', 'https://amzn.in/d/0gbRo820')">View</button>
+            <img src="actionfigure.png" alt="Anime Figure">
+            <a href="https://amzn.in/d/0gbRo820" class="visit-btn" target="_blank">VISIT</a>
         </div>
 
         <div class="product-card">
             <h3>Deskmat</h3>
-            <button onclick="showProduct('deskmat.jpg', 'https://amzn.in/d/02BmEknk')">View</button>
+            <img src="deskmat.png" alt="Deskmat">
+            <a href="https://amzn.in/d/02BmEknk" class="visit-btn" target="_blank">VISIT</a>
         </div>
 
         <div class="product-card">
             <h3>Headphone</h3>
-            <button onclick="showProduct('headphone.jpg', 'https://amzn.in/d/08CAFopT')">View</button>
+            <img src="headphone.png" alt="Headphone">
+            <a href="https://amzn.in/d/08CAFopT" class="visit-btn" target="_blank">VISIT</a>
         </div>
 
         <div class="product-card">
             <h3>Cooling Pad</h3>
-            <button onclick="showProduct('coolingpad.jpg', 'https://amzn.in/d/0gxBpZbN')">View</button>
+            <img src="coolingpad.png" alt="Cooling Pad">
+            <a href="https://amzn.in/d/0gxBpZbN" class="visit-btn" target="_blank">VISIT</a>
         </div>
-    </div>
-
-    <div id="modal" class="modal">
-        <span class="close-modal" onclick="closeProduct()">×</span>
-        <img id="modal-img" src="" alt="Product">
-        <a id="visit-btn" href="#" target="_blank"><button>VISIT</button></a>
+        
     </div>
 
     <script>
-        // Sidebar logic
+        // Sidebar slide logic
+        let navOpen = false;
         function toggleNav() {
             var sidebar = document.getElementById("mySidebar");
-            if (sidebar.style.width === "250px") {
-                sidebar.style.width = "0";
+            var menuIcon = document.getElementById("menuIcon");
+            
+            if (!navOpen) {
+                sidebar.style.width = "300px";
+                menuIcon.innerHTML = "×"; // Changes to close button
+                navOpen = true;
             } else {
-                sidebar.style.width = "250px";
+                sidebar.style.width = "0";
+                menuIcon.innerHTML = "☰"; // Changes back to burger
+                navOpen = false;
             }
-        }
-
-        // Modal logic
-        function showProduct(imgSrc, link) {
-            document.getElementById("modal").style.display = "flex";
-            document.getElementById("modal-img").src = imgSrc;
-            document.getElementById("visit-btn").href = link;
-        }
-
-        function closeProduct() {
-            document.getElementById("modal").style.display = "none";
         }
     </script>
 </body>
