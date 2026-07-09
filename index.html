@@ -6,6 +6,7 @@
     <title>@zeuscreates.exe</title>
     <style>
         :root {
+            /* Neo Light Purple Theme */
             --neon-purple: #c774ff;
             --deep-purple: #7a22cc;
             --bg-dark: #0a0510;
@@ -58,7 +59,7 @@
             transition: 0.3s;
             margin-left: auto;
             text-shadow: var(--text-glow);
-            z-index: 1001; /* Keeps menu button above sidebar */
+            z-index: 1001;
         }
         .menu-btn:hover {
             text-shadow: 0 0 20px var(--neon-purple);
@@ -71,16 +72,16 @@
             width: 0; 
             position: fixed; 
             top: 0; 
-            right: 0; /* Moved to the right */
-            background: rgba(25, 10, 40, 0.3); 
-            backdrop-filter: blur(15px); /* Frosted glass effect */
+            right: 0; 
+            background: rgba(25, 10, 40, 0.4); 
+            backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             overflow-x: hidden; 
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            padding-top: 100px; 
+            padding-top: 80px; 
             border-left: 1px solid rgba(199, 116, 255, 0.3); 
             z-index: 1000; 
-            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
         }
         .sidebar a { 
             padding: 20px 40px; 
@@ -95,6 +96,15 @@
             color: #fff; 
             text-shadow: var(--text-glow);
             background: rgba(199, 116, 255, 0.1);
+        }
+        
+        /* Specific style for the close button in the sidebar */
+        .close-sidebar {
+            text-align: right;
+            font-size: 24px !important;
+            color: var(--neon-purple) !important;
+            border-bottom: 1px solid rgba(199, 116, 255, 0.2);
+            margin-bottom: 10px;
         }
 
         /* Product Grid */
@@ -129,7 +139,6 @@
             animation: fadeInUp 0.8s ease backwards;
         }
         
-        /* Staggered load in for cards */
         .product-card:nth-child(1) { animation-delay: 0.1s; }
         .product-card:nth-child(2) { animation-delay: 0.2s; }
         .product-card:nth-child(3) { animation-delay: 0.3s; }
@@ -180,7 +189,7 @@
             position: relative;
             box-shadow: 0 0 10px rgba(199, 116, 255, 0.2);
         }
-        .visit-btn::before { /* Small dots on the sides of the button */
+        .visit-btn::before {
             content: '';
             position: absolute;
             left: 15px; top: 50%; transform: translateY(-50%);
@@ -230,7 +239,6 @@
             50% { transform: scale(1.1); opacity: 0.5; box-shadow: 0 0 20px var(--neon-purple); }
             100% { transform: scale(1); opacity: 0.2; box-shadow: 0 0 5px var(--neon-purple); }
         }
-
     </style>
 </head>
 <body>
@@ -243,6 +251,7 @@
     </header>
 
     <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-sidebar" onclick="toggleNav()">× Close Menu</a>
         <a href="https://www.desktophut.com/" target="_blank">Wallpapers</a>
         <a href="https://www.instagram.com/zeuscreates.exe?igsh=MWRndzF3ZXItcHBlbw==" target="_blank">Setup Upgrades</a>
     </div>
@@ -282,7 +291,6 @@
     </div>
 
     <script>
-        // Sidebar slide logic
         let navOpen = false;
         function toggleNav() {
             var sidebar = document.getElementById("mySidebar");
@@ -290,11 +298,11 @@
             
             if (!navOpen) {
                 sidebar.style.width = "300px";
-                menuIcon.innerHTML = "×"; // Changes to close button
+                menuIcon.innerHTML = "×"; 
                 navOpen = true;
             } else {
                 sidebar.style.width = "0";
-                menuIcon.innerHTML = "☰"; // Changes back to burger
+                menuIcon.innerHTML = "☰"; 
                 navOpen = false;
             }
         }
