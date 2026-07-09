@@ -2,26 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Zeus Creates</title>
     <style>
-        body { background-color: black; color: #008080; font-family: 'Courier New', monospace; text-align: center; padding: 50px; }
-        h1 { color: #008080; text-shadow: 0 0 10px #008080; border-bottom: 2px solid #008080; display: inline-block; padding-bottom: 10px; text-transform: uppercase; }
-        .product-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 50px; }
-        .product-card { border: 2px solid #008080; padding: 20px; width: 280px; background: #0a0a0a; }
+        body { background-color: black; color: #008080; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
+        
+        /* Welcome Section */
+        #welcome-section { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        h1 { font-size: 3rem; text-shadow: 0 0 15px #008080; }
+        .neon-button { padding: 15px 30px; font-size: 1.5rem; color: black; background-color: #008080; border: none; cursor: pointer; box-shadow: 0 0 20px #008080; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .neon-button:hover { background-color: #00ffff; box-shadow: 0 0 40px #00ffff; }
+
+        /* Products Section */
+        #products-section { display: none; padding: 50px; }
+        .product-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px; }
+        .product-card { border: 2px solid #008080; padding: 20px; width: 280px; background: #0a0a0a; text-decoration: none; color: #008080; display: block; }
         img { width: 100%; height: 200px; object-fit: cover; border: 1px solid #008080; margin-bottom: 15px; }
     </style>
 </head>
 <body>
-    <h1>Zeus Creates</h1>
-    <div class="product-container">
-        <div class="product-card">
-            <img src="actionfigure.jpg" alt="Anime Figure">
-            <h3>Anime Figure</h3>
-        </div>
-        <div class="product-card">
-            <img src="keyboard.jpg" alt="Custom Keyboard">
-            <h3>Custom Keyboard</h3>
+
+    <div id="welcome-section">
+        <h1>Welcome to Zeuscreates Page</h1>
+        <button class="neon-button" onclick="showProducts()">GET STARTED</button>
+    </div>
+
+    <div id="products-section">
+        <h1>Our Products</h1>
+        <div class="product-container">
+            
+            <!-- Product 1 -->
+            <a href="https://amzn.in/d/0glh4cvU" class="product-card" target="_blank">
+                <img src="actionfigure.jpg" alt="Anime Figure">
+                <h3>Anime Figure</h3>
+            </a>
+
+            <!-- Product 2 -->
+            <a href="https://amzn.in/d/0b3TUgpI" class="product-card" target="_blank">
+                <img src="keyboard.jpg" alt="Custom Keyboard">
+                <h3>Custom Keyboard</h3>
+            </a>
+
+            <!-- Product 3 -->
+            <a href="https://amzn.in/d/0grvzUPx" class="product-card" target="_blank">
+                <img src="deskmat.jpg" alt="Desk Mat">
+                <h3>Desk Mat</h3>
+            </a>
+
         </div>
     </div>
+
+    <script>
+        function showProducts() {
+            document.getElementById('welcome-section').style.display = 'none';
+            document.getElementById('products-section').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
